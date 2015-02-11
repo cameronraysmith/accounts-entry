@@ -46,6 +46,9 @@ AccountsEntry.entrySignUpHelpers = {
 
   emailAddress: ->
     Session.get('email')
+
+  betaToken: ->
+    Session.get('betaToken')
 }
 
 AccountsEntry.entrySignUpEvents = {
@@ -129,8 +132,12 @@ AccountsEntry.entrySignUpEvents = {
       Session.set('entryError', t9n("error.signupCodeRequired"))
       return
 
+    testUser =
+      email: email
+      betaToken: Session.get 'betaToken'
 
-    Meteor.call 'entryValidateSignupCode', signupCode, (err, valid) ->
+    # Meteor.call 'entryValidateSignupCode', signupCode, (err, valid) ->
+    Meteor.call 'validateBetaToken', testUser, (err, valid) ->
       if valid
         newUserData =
           username: username
