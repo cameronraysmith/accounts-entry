@@ -29,5 +29,8 @@ Meteor.startup ->
           email: user.email
           password: user.password
           profile: _.extend(profile, user.profile)
+
+      Roles.addUsersToRoles(userId, ['tester']);
+
       if (user.email && Accounts._options.sendVerificationEmail)
         Accounts.sendVerificationEmail(userId, user.email)
